@@ -115,11 +115,11 @@ function showTemperatureOfCity(cityId){
                     //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
 
                     idx === 0 ? '' :
-                    <div style={{border:"1px solid black", borderRadius:"3em"}}>
+                    <div style={{border:"1px solid black", borderRadius:"2em"}}>
                         <center>
                         <p>{String(new Date(tempDisplaying[3][key].dt * 1000)).split(" ")[0]}</p>
                         </center>
-                        <p>Max: {tempDisplaying[3][key].temp.max}</p>
+                        <p>Max: <span style={{fontWeight:"900"}}>{Math.round(Number(tempDisplaying[3][key].temp.max))}</span></p>
                         <p>Min: {tempDisplaying[3][key].temp.min}</p>
                         <center>
                          <p>{tempDisplaying[3][key].weather[0].main}</p>
@@ -133,7 +133,7 @@ function showTemperatureOfCity(cityId){
              
               </div>
 
-        <div>
+        <div style={{height:"calc(100vh - 4em)",backgroundColor:"aliceBlue", padding:"2em 0"}}>
             <div style={{height:"80vh"}}>
             <input type="text" placeholder="search for city" style={{width:"80%"}} onChange={inputChange}/>
             <button onClick={() => getCity(search)}>search</button>

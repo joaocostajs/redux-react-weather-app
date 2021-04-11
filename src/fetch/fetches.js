@@ -74,7 +74,6 @@ export async function getWeeklyWeather() {
                         return response.data, i
                     })
                     return res2
-                
             })
             return allres
 
