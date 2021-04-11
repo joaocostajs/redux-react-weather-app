@@ -88,6 +88,14 @@ getCi.then(function(result) {
 }
 
 
+function showTemperatureOfCity(cityId){
+    const clicked = cities.find(city => city.id === cityId)
+    console.log("clicked",clicked)
+    const currentWeather = [clicked.city,clicked.country, clicked.temp, clicked.nextSevenDays]
+    setTempDisplaying(currentWeather)
+}
+
+
 
     return (
        
@@ -115,21 +123,7 @@ getCi.then(function(result) {
                     ) : null}
 </div>
 
-             {console.log(cities.length)}
-              <p> {city}</p> 
-              <p> {cities["1"] ? Math.round(Number(cities["1"].temp)) : "city"}</p>
-              <div style={{display:"grid", gridTemplateColumns:"repeat(7, 1fr)"}}>
-                    {cities["1"] ? cities["1"].nextSevenDays.map((item, idx) =>
-                    //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
-                    idx === 0 ? '' :
-                    <div>
-                        <p>{String(new Date(item.dt * 1000)).split(" ")[0]}</p>
-                        <p>min temp: {item.temp.min}</p>
-                        <p>max temp: {item.temp.max}</p>
-                        <p>feels like: {item.weather[0].main}</p>
-                    </div>
-                    ) : null}
-              </div>
+           
              
               </div>
 
@@ -141,8 +135,8 @@ getCi.then(function(result) {
             //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
             idx === 0 ? '' :
             <div>
-             
-                  <p>{cities[key].id} {cities[key].city},{cities[key].country} </p>
+             <button onClick={() => showTemperatureOfCity(cities[key].id)}> <p>{cities[key].id} {cities[key].city},{cities[key].country} </p></button>
+                  {/* <p>{cities[key].id} {cities[key].city},{cities[key].country} </p> */}
                   <button onClick={() => dispatch(deleteCity(cities[key].id))}>delete</button>
               </div>
               ) : null}
