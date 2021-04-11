@@ -9,13 +9,13 @@ import {addCity, deleteCity} from '../actions'
 const key = process.env.REACT_APP_API_KEY
 
 function WeatherPage () {
-    const weather = useSelector(state => state.weather)
+    const cities = useSelector(state => state.cities)
 const [search, setSearch] = useState("")
 
-    console.log("weathaaaa",weather["1"])
-    console.log(weather)
-    let city = weather["1"] ? weather["1"].city : "city"
-    console.log("the state:",weather)
+    console.log("weathaaaa",cities["1"])
+    console.log(cities)
+    let city = cities["1"] ? cities["1"].city : "city"
+    console.log("the state:",cities)
     // getWeather()
 
 const location = () =>{
@@ -75,14 +75,15 @@ const dispatch = useDispatch()
 
             
              <h1 onClick={() => test()}>Weather page</h1>
-             {console.log(weather.length)}
+             {console.log(cities.length)}
               <p> {city}</p> 
-              <p> {weather["1"] ? Math.round(Number(weather["1"].temp)) : "city"}</p>
+              <p> {cities["1"] ? Math.round(Number(cities["1"].temp)) : "city"}</p>
               <div style={{display:"grid", gridTemplateColumns:"repeat(7, 1fr)"}}>
-                    {weather["1"] ? weather["1"].nextSevenDays.map((item, idx) =>
+                    {cities["1"] ? cities["1"].nextSevenDays.map((item, idx) =>
                     //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
                     idx === 0 ? '' :
                     <div>
+                        <p>{String(new Date(item.dt * 1000)).split(" ")[0]}</p>
                         <p>min temp: {item.temp.min}</p>
                         <p>max temp: {item.temp.max}</p>
                         <p>feels like: {item.weather[0].main}</p>
@@ -94,15 +95,15 @@ const dispatch = useDispatch()
 
         <div>
              <input type="text" placeholder="search for city" style={{width:"80%"}} onChange={inputChange}/>
-            <button onClick={getWeather(search)}>search</button>
+            <button onClick={() => getWeather(search)}>search</button>
            
-             {weather["1"] ? Object.keys(weather).map((key, idx) =>
+             {cities["1"] ? Object.keys(cities).map((key, idx) =>
             //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
             idx === 0 ? '' :
             <div>
              
-                  <p>{weather[key].id} {weather[key].city},{weather[key].country} </p>
-                  <button onClick={() => dispatch(deleteCity(weather[key].id))}>delete</button>
+                  <p>{cities[key].id} {cities[key].city},{cities[key].country} </p>
+                  <button onClick={() => dispatch(deleteCity(cities[key].id))}>delete</button>
               </div>
               ) : null}
         </div>

@@ -8,7 +8,7 @@ const city = {
 
 
 
-const weather = (state = [], action) => {
+const cities = (state = [], action) => {
     switch (action.type){
         case 'ADD_CITY':
             console.log("action",action)
@@ -32,9 +32,10 @@ const weather = (state = [], action) => {
                 console.log("filtered",state.filter(({ id }) => id !== action.idx))
 
                 return state.filter(({ id }) => id !== action.idx);
+
         default: 
             return state;
     }
 }
 
-export default weather;
+export default cities;
