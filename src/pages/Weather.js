@@ -110,7 +110,7 @@ function showTemperatureOfCity(cityId){
 <h1>{tempDisplaying ? tempDisplaying[2] : "Loading"}</h1>
 {console.log("temp",tempDisplaying[3])}
 <center>
-<div style={{display:"grid", gridTemplateColumns:"repeat(7, 1fr)", gap:"1em", width:"90%"}}>
+<div style={{display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(100px, 1fr))", gap:"1em", width:"90%"}}>
 {tempDisplaying[3] ? Object.keys(tempDisplaying[3]).map((key, idx) =>
                     //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
                     idx === 0 ? '' :

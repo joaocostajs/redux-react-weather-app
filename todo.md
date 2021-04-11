@@ -11,6 +11,7 @@
  - add icons 
 
  - refactor code 
+    ✅ refactored the 7 days item to a component
 
  - add comments 
 
