@@ -105,30 +105,37 @@ function showTemperatureOfCity(cityId){
 
              <h1 onClick={() => test()}>Weather page</h1>
 
-<p>{tempDisplaying ? tempDisplaying[0] : "Loading"}</p>
+<h1>{tempDisplaying ? tempDisplaying[0] : "Loading"}</h1>
 <p>{tempDisplaying ? tempDisplaying[1] : "Loading"}</p>
-<p>{tempDisplaying ? tempDisplaying[2] : "Loading"}</p>
+<h1>{tempDisplaying ? tempDisplaying[2] : "Loading"}</h1>
 {console.log("temp",tempDisplaying[3])}
-<div style={{display:"grid", gridTemplateColumns:"repeat(7, 1fr)"}}>
+<center>
+<div style={{display:"grid", gridTemplateColumns:"repeat(7, 1fr)", gap:"1em", width:"90%"}}>
 {tempDisplaying[3] ? Object.keys(tempDisplaying[3]).map((key, idx) =>
                     //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
 
                     idx === 0 ? '' :
-                    <div>
+                    <div style={{border:"1px solid black", borderRadius:"3em"}}>
+                        <center>
                         <p>{String(new Date(tempDisplaying[3][key].dt * 1000)).split(" ")[0]}</p>
-                        <p>min temp: {tempDisplaying[3][key].temp.min}</p>
-                        <p>max temp: {tempDisplaying[3][key].temp.max}</p>
-                        <p>feels like: {tempDisplaying[3][key].weather[0].main}</p>
+                        </center>
+                        <p>Max: {tempDisplaying[3][key].temp.max}</p>
+                        <p>Min: {tempDisplaying[3][key].temp.min}</p>
+                        <center>
+                         <p>{tempDisplaying[3][key].weather[0].main}</p>
+                        </center>
                     </div>
                     ) : null}
 </div>
+</center>
 
            
              
               </div>
 
         <div>
-             <input type="text" placeholder="search for city" style={{width:"80%"}} onChange={inputChange}/>
+            <div style={{height:"80vh"}}>
+            <input type="text" placeholder="search for city" style={{width:"80%"}} onChange={inputChange}/>
             <button onClick={() => getCity(search)}>search</button>
            
              {cities["1"] ? Object.keys(cities).map((key, idx) =>
@@ -140,6 +147,18 @@ function showTemperatureOfCity(cityId){
                   <button onClick={() => dispatch(deleteCity(cities[key].id))}>delete</button>
               </div>
               ) : null}
+
+            </div>
+            
+
+
+
+    <div>
+        <p>current location weather</p>
+        <p> {cities[0] ? cities[0].city : "null"}</p>
+    </div>
+
+
         </div>
         </div>
        
