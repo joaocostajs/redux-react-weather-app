@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {getWeather, getWeeklyWeather} from '../fetch/fetches'
+import {getWeather, getWeeklyWeather, testing} from '../fetch/fetches'
 import {useState, useEffect} from 'react';
 import { geolocated } from "react-geolocated";
 import {useSelector, useDispatch} from 'react-redux';
@@ -64,6 +64,22 @@ console.log(e.target.value)
 setSearch(e.target.value)
 }
 
+const getCi = testing()
+
+
+
+function getCity(search){
+getCi.then(function(result) {
+    console.log("testing", result)// "Some User token"
+ })
+
+    // const foundCity = await getWeather(search)
+//     const foundCity = getWeather(search)
+// console.log("foundcity", foundCity)
+    // dispatch(addCity(arguments[2],arguments[3], response.data.current.temp, response.data.daily))
+}
+
+
 
 const dispatch = useDispatch()
 
@@ -95,7 +111,7 @@ const dispatch = useDispatch()
 
         <div>
              <input type="text" placeholder="search for city" style={{width:"80%"}} onChange={inputChange}/>
-            <button onClick={() => getWeather(search)}>search</button>
+            <button onClick={() => getCity(search)}>search</button>
            
              {cities["1"] ? Object.keys(cities).map((key, idx) =>
             //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
