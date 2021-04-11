@@ -64,13 +64,24 @@ console.log(e.target.value)
 setSearch(e.target.value)
 }
 
-const getCi = testing()
+const getCi = getWeather(search)
 
 
 
-function getCity(search){
+function getCity(){
 getCi.then(function(result) {
-    console.log("testing", result)// "Some User token"
+    console.log("testing", result)
+    const searchResult = result
+    // once i know the city i can then fetch info about it
+    const allDays = getWeeklyWeather(result.data.coord.lat, result.data.coord.lon)
+
+    allDays.then(function(result) {
+        console.log("got all days for the searched city", result)
+        getWeeklyWeather(searchResult.data.coord.lat,searchResult.data.coord.lon, searchResult.data.name, searchResult.data.sys.country).then(function(result) {
+       console.log("all days", result) })
+        })
+   
+    // "Some User token"
  })
 
     // const foundCity = await getWeather(search)
