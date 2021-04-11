@@ -155,7 +155,9 @@ function showTemperatureOfCity(cityId){
 
     <div>
         <p>current location weather</p>
-        <p> {cities[0] ? cities[0].city : "null"}</p>
+        {cities[0] ? 
+        <p onClick={() => showTemperatureOfCity(cities[0].id)}> { cities[0].city}</p>
+        : "null"}
     </div>
 
 
