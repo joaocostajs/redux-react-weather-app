@@ -57,18 +57,27 @@ export async function getWeeklyWeather() {
         
         
         }else{
-            await axios.get(getIP)
+            let allres 
+            const res = await axios
+            .get(getIP)
             .then(function(response){
-                console.log("getIP", response)
-                       lat= response.data.lat
-                       lon= response.data.lon
-                axios.get(url + lat +"&lon=" + lon + "&exclude=minutely,alerts,hourly" +  "&appid=" + key + "&units=metric")
+                const i = response
+                //getting current user lat and lon
+                lat = response.data.lat
+                lon = response.data.lon
+               
+                console.log("axios 1 complete")
+                const res2 = axios.get(url + lat +"&lon=" + lon + "&exclude=minutely,alerts,hourly" +  "&appid=" + key + "&units=metric")
                     .then(function(response){
                         console.log("here the week:", response.data)
-                        return response.data
+                        allres = {response,i}
+                        return response.data, i
                     })
+                    return res2
                 
             })
+            return allres
+
     
         }
 

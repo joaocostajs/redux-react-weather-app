@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {getWeather, getWeeklyWeather, testing} from '../fetch/fetches'
 import {useState, useEffect} from 'react';
-import { geolocated } from "react-geolocated";
+
 import {useSelector, useDispatch} from 'react-redux';
 import {addCity, deleteCity} from '../actions'
 
@@ -10,25 +10,19 @@ const key = process.env.REACT_APP_API_KEY
 
 function WeatherPage () {
     const cities = useSelector(state => state.cities)
-const [search, setSearch] = useState("")
+    const dispatch = useDispatch()
+    const [search, setSearch] = useState("")
+    const [tempDisplaying, setTempDisplaying] = useState({})
 
-    console.log("weathaaaa",cities["1"])
-    console.log(cities)
     let city = cities["1"] ? cities["1"].city : "city"
-    console.log("the state:",cities)
+
+
+useEffect(() => {
+
+}, [tempDisplaying])
     // getWeather()
 
-const location = () =>{
-    if (navigator.geolocation) {
-        console.log("enabled")
-        console.log( navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position)
-               }))
-        navigator.geolocation.getCurrentPosition(showPosition);
-      } else {
-        return "Geolocation is not supported by this browser.";
-      }
-}
+
 let lat = 0
 function showPosition(position) {
     lat = position.coords.latitude
@@ -50,13 +44,21 @@ async function test(){
                 .then(function(response){
                     console.log("here the week:", response.data)
                     dispatch(addCity(city,country, response.data.current.temp, response.data.daily))
+
                 })
             
         })
    
 }
 useEffect(() => {
-    test()
+    getWeeklyWeather().then(function(res){
+        console.log("initial res", res)
+        dispatch(addCity(res.i.data.city,res.i.data.country, res.response.data.current.temp, res.response.data.daily))
+        const currentWeather = [res.i.data.city,res.i.data.country, res.response.data.current.temp, res.response.data.daily]
+        console.log("current", currentWeather)
+        setTempDisplaying(currentWeather)
+    })
+   
 }, [])
 
 function inputChange(e) {
@@ -80,21 +82,12 @@ getCi.then(function(result) {
         getWeeklyWeather(searchResult.data.coord.lat,searchResult.data.coord.lon, searchResult.data.name, searchResult.data.sys.country).then(function(result) {
        console.log("all days", result) })
              dispatch(addCity(searchResult.data.name,searchResult.data.sys.country, result.current.temp, result.daily))
-
         })
-   
-    // "Some User token"
  })
 
-    // const foundCity = await getWeather(search)
-//     const foundCity = getWeather(search)
-// console.log("foundcity", foundCity)
-    // dispatch(addCity(arguments[2],arguments[3], response.data.current.temp, response.data.daily))
 }
 
 
-
-const dispatch = useDispatch()
 
     return (
        
@@ -102,8 +95,26 @@ const dispatch = useDispatch()
              {console.log("rendering.........")}
              <div>
 
-            
              <h1 onClick={() => test()}>Weather page</h1>
+
+<p>{tempDisplaying ? tempDisplaying[0] : "Loading"}</p>
+<p>{tempDisplaying ? tempDisplaying[1] : "Loading"}</p>
+<p>{tempDisplaying ? tempDisplaying[2] : "Loading"}</p>
+{console.log("temp",tempDisplaying[3])}
+<div style={{display:"grid", gridTemplateColumns:"repeat(7, 1fr)"}}>
+{tempDisplaying[3] ? Object.keys(tempDisplaying[3]).map((key, idx) =>
+                    //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
+
+                    idx === 0 ? '' :
+                    <div>
+                        <p>{String(new Date(tempDisplaying[3][key].dt * 1000)).split(" ")[0]}</p>
+                        <p>min temp: {tempDisplaying[3][key].temp.min}</p>
+                        <p>max temp: {tempDisplaying[3][key].temp.max}</p>
+                        <p>feels like: {tempDisplaying[3][key].weather[0].main}</p>
+                    </div>
+                    ) : null}
+</div>
+
              {console.log(cities.length)}
               <p> {city}</p> 
               <p> {cities["1"] ? Math.round(Number(cities["1"].temp)) : "city"}</p>
