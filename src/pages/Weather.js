@@ -79,6 +79,8 @@ getCi.then(function(result) {
         console.log("got all days for the searched city", result)
         getWeeklyWeather(searchResult.data.coord.lat,searchResult.data.coord.lon, searchResult.data.name, searchResult.data.sys.country).then(function(result) {
        console.log("all days", result) })
+             dispatch(addCity(searchResult.data.name,searchResult.data.sys.country, result.current.temp, result.daily))
+
         })
    
     // "Some User token"
