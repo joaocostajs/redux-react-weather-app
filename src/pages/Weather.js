@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {addCity, deleteCity} from '../actions'
-
+import {DaysDisplay} from '../components/daysDisplay'
 
 const key = process.env.REACT_APP_API_KEY
 
@@ -113,18 +113,8 @@ function showTemperatureOfCity(cityId){
 <div style={{display:"grid", gridTemplateColumns:"repeat(7, 1fr)", gap:"1em", width:"90%"}}>
 {tempDisplaying[3] ? Object.keys(tempDisplaying[3]).map((key, idx) =>
                     //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
-
                     idx === 0 ? '' :
-                    <div style={{border:"1px solid black", borderRadius:"2em"}}>
-                        <center>
-                        <p>{String(new Date(tempDisplaying[3][key].dt * 1000)).split(" ")[0]}</p>
-                        </center>
-                        <p>Max: <span style={{fontWeight:"900"}}>{Math.round(Number(tempDisplaying[3][key].temp.max))}</span></p>
-                        <p>Min: {tempDisplaying[3][key].temp.min}</p>
-                        <center>
-                         <p>{tempDisplaying[3][key].weather[0].main}</p>
-                        </center>
-                    </div>
+                    <DaysDisplay item={tempDisplaying[3]} k={key}/>
                     ) : null}
 </div>
 </center>
