@@ -20,7 +20,8 @@ const cities = (state = [], action) => {
                     city:action.city,
                     country:action.country,
                     temp: action.temp,
-                    nextSevenDays: action.nextSevenDays
+                    nextSevenDays: action.nextSevenDays,
+                    icon: action.icon
                 }
               
                 //overwrite the state

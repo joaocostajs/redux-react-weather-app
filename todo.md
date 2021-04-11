@@ -8,7 +8,7 @@
 
  - create components for the elements and styled components
 
- - add icons 
+ ✅ add icons 
 
  - refactor code 
     ✅ refactored the 7 days item to a component

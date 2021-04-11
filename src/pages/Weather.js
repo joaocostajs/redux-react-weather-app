@@ -53,8 +53,8 @@ async function test(){
 useEffect(() => {
     getWeeklyWeather().then(function(res){
         console.log("initial res", res)
-        dispatch(addCity(res.i.data.city,res.i.data.country, res.response.data.current.temp, res.response.data.daily))
-        const currentWeather = [res.i.data.city,res.i.data.country, res.response.data.current.temp, res.response.data.daily]
+        dispatch(addCity(res.i.data.city,res.i.data.country, res.response.data.current.temp, res.response.data.daily,res.response.data.current.weather[0].icon))
+        const currentWeather = [res.i.data.city,res.i.data.country, res.response.data.current.temp, res.response.data.daily, res.response.data.current.weather[0].icon]
         console.log("current", currentWeather)
         setTempDisplaying(currentWeather)
     })
@@ -81,7 +81,7 @@ getCi.then(function(result) {
         console.log("got all days for the searched city", result)
         getWeeklyWeather(searchResult.data.coord.lat,searchResult.data.coord.lon, searchResult.data.name, searchResult.data.sys.country).then(function(result) {
        console.log("all days", result) })
-             dispatch(addCity(searchResult.data.name,searchResult.data.sys.country, result.current.temp, result.daily))
+             dispatch(addCity(searchResult.data.name,searchResult.data.sys.country, result.current.temp, result.daily, result.current.weather[0].icon))
         })
  })
 
@@ -91,7 +91,7 @@ getCi.then(function(result) {
 function showTemperatureOfCity(cityId){
     const clicked = cities.find(city => city.id === cityId)
     console.log("clicked",clicked)
-    const currentWeather = [clicked.city,clicked.country, clicked.temp, clicked.nextSevenDays]
+    const currentWeather = [clicked.city,clicked.country, clicked.temp, clicked.nextSevenDays, clicked.icon ]
     setTempDisplaying(currentWeather)
 }
 
@@ -104,7 +104,9 @@ function showTemperatureOfCity(cityId){
              <div>
 
              <h1 onClick={() => test()}>Weather page</h1>
-
+             {tempDisplaying ? 
+             <img src={"http://openweathermap.org/img/w/" +  tempDisplaying[4] + ".png"} alt=""/>
+             : "loading"}
 <h1>{tempDisplaying ? tempDisplaying[0] : "Loading"}</h1>
 <p>{tempDisplaying ? tempDisplaying[1] : "Loading"}</p>
 <h1>{tempDisplaying ? tempDisplaying[2] : "Loading"}</h1>
