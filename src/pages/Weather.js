@@ -117,10 +117,11 @@ function showTemperatureOfCity(cityId){
              {cities["1"] ? Object.keys(cities).map((key, idx) =>
             //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
             idx === 0 ? '' :
-            <div>
+            <div style={{display:"grid", gridTemplateColumns:"4fr 1fr"}}>
              <p onClick={() => showTemperatureOfCity(cities[key].id)}>{cities[key].id} {cities[key].city},{cities[key].country} </p>
                   {/* <p>{cities[key].id} {cities[key].city},{cities[key].country} </p> */}
-                  <button onClick={() => dispatch(deleteCity(cities[key].id))}>delete</button>
+                  <img src="/trash.svg" alt="" onClick={() => dispatch(deleteCity(cities[key].id))}/>
+
               </div>
               ) : null}
 
@@ -132,7 +133,7 @@ function showTemperatureOfCity(cityId){
     <div>
         <p>current location weather</p>
         {cities[0] ? 
-        <p onClick={() => showTemperatureOfCity(cities[0].id)}> { cities[0].city}</p>
+        <p onClick={() => showTemperatureOfCity(cities[0].id)}> { cities[0].city},{ cities[0].country}</p>
         : "null"}
     </div>
 
