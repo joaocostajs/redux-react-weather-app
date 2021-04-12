@@ -45,10 +45,8 @@ useEffect(() => {
         console.log("leiriazero", res)
        const resTest = res
             getWeeklyWeather(res.data.coord.lat, res.data.coord.lon).then(function(res2){
-                console.log("leiria here we go", res2)
+                //this setxGeeks should be improved since its irrelevant and just used to trigger the use effect related with xgeeks
                 setxGeeks({res, res2})
-                console.log(res)
-                console.log(resTest)
 
                 dispatch(addCity(res.data.name,res.data.sys.country, res2.current.temp, res2.daily,res2.current.weather[0].icon))
             })
@@ -57,6 +55,8 @@ useEffect(() => {
 }, [])
 useEffect(() => {
 console.log("xgeeks",xGeeks)
+const leiria = cities.find(city => city.city === "Leiria")
+setxGeeks(leiria)
 }, [xGeeks])
 function inputChange(e) {
 console.log(e.target.value)
@@ -106,6 +106,8 @@ function showTemperatureOfCity(cityId){
     setTempDisplaying(currentWeather)
 }
 
+
+
     return (
        
         <div style={{display:"grid", gridTemplateColumns:"4fr 2fr"}}>
@@ -148,7 +150,10 @@ function showTemperatureOfCity(cityId){
             </div>
             
 
-
+<div>
+    XGeeks
+    {xGeeks && <p onClick={() => showTemperatureOfCity(xGeeks.id)}>{xGeeks.city}</p>}
+</div>
 
     <div>
         <p>current location weather</p>
