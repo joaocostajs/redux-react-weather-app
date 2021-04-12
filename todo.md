@@ -1,6 +1,11 @@
- - if city searched is already in store ignore the user request and give him feedback
+✅  if city searched is already in store ignore the user request and give him feedback
+      - improve feedback, dont show just a alert
 
  ✅ connect click for the lower right section, current location weather, to display in the main section
+
+ - change location method
+
+ - if the current location fails them it should show leiria location
 
  - add leiria location and show it on screen
 
@@ -15,6 +20,6 @@
 
  - add comments 
 
- - on the searched cities add also the country
+✅ on the searched cities add also the country
 
-- if the current location fails them it should show leiria location
+

@@ -29,27 +29,7 @@ function showPosition(position) {
     console.log("lat:",  position.coords.latitude)
 }
 
-async function test(){
-    let url = 'https://api.openweathermap.org/data/2.5/onecall?lat=' 
-    console.log("getWeekly")
-    let city = ""
-    let country = ""
-    axios.get("http://ip-api.com/json/")
-        .then(function(response){
-            console.log("getIP", response)
-            const {lat, lon} = {...response.data}
-            city = response.data.city
-            country = response.data.country
-            axios.get(url + lat +"&lon=" + lon + "&exclude=minutely,alerts,hourly" +  "&appid=" + key + "&units=metric")
-                .then(function(response){
-                    console.log("here the week:", response.data)
-                    dispatch(addCity(city,country, response.data.current.temp, response.data.daily))
 
-                })
-            
-        })
-   
-}
 useEffect(() => {
     getWeeklyWeather().then(function(res){
         console.log("initial res", res)
@@ -71,6 +51,12 @@ const getCi = getWeather(search)
 
 
 function getCity(){
+
+// verify if we have this search city already
+if( cities.find(item => item.city.toLowerCase() === search.toLowerCase())) return alert("we have it")
+
+
+
 getCi.then(function(result) {
     console.log("testing", result)
     const searchResult = result
@@ -95,22 +81,20 @@ function showTemperatureOfCity(cityId){
     setTempDisplaying(currentWeather)
 }
 
-
-
     return (
        
         <div style={{display:"grid", gridTemplateColumns:"4fr 2fr"}}>
              {console.log("rendering.........")}
              <div>
-
-             <h1 onClick={() => test()}>Weather page</h1>
+             <h1>Weather page</h1>
              {tempDisplaying ? 
-             <img src={"http://openweathermap.org/img/w/" +  tempDisplaying[4] + ".png"} alt=""/>
-             : "loading"}
-<h1>{tempDisplaying ? tempDisplaying[0] : "Loading"}</h1>
-<p>{tempDisplaying ? tempDisplaying[1] : "Loading"}</p>
-<h1>{tempDisplaying ? tempDisplaying[2] : "Loading"}</h1>
-{console.log("temp",tempDisplaying[3])}
+             <div>   
+             <img src={"http://openweathermap.org/img/w/" +  tempDisplaying[4] + ".png"} alt=""/>    
+            <h1>{tempDisplaying[0]}</h1>
+            <p>{tempDisplaying[1]}</p>
+            <h1>{tempDisplaying[2]}</h1>
+</div>
+: "loading"}
 <center>
 <div style={{display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(100px, 1fr))", gap:"1em", width:"90%"}}>
 {tempDisplaying[3] ? Object.keys(tempDisplaying[3]).map((key, idx) =>
@@ -134,7 +118,7 @@ function showTemperatureOfCity(cityId){
             //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
             idx === 0 ? '' :
             <div>
-             <button onClick={() => showTemperatureOfCity(cities[key].id)}> <p>{cities[key].id} {cities[key].city},{cities[key].country} </p></button>
+             <p onClick={() => showTemperatureOfCity(cities[key].id)}>{cities[key].id} {cities[key].city},{cities[key].country} </p>
                   {/* <p>{cities[key].id} {cities[key].city},{cities[key].country} </p> */}
                   <button onClick={() => dispatch(deleteCity(cities[key].id))}>delete</button>
               </div>

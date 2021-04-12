@@ -12,6 +12,9 @@ const cities = (state = [], action) => {
     switch (action.type){
         case 'ADD_CITY':
             console.log("action",action)
+        // if we already have this city on state dont add it again
+            if( state.find(item => item.city === action.city)) return state
+            
             return [
                 // take the current state
                 ...state,
