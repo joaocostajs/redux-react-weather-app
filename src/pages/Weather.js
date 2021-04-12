@@ -30,7 +30,7 @@ function showPosition(position) {
     console.log("lat:",  position.coords.latitude)
 }
 
-
+const [xGeeks, setxGeeks] = useState()
 useEffect(() => {
     getWeeklyWeather().then(function(res){
         console.log("initial res", res)
@@ -39,20 +39,44 @@ useEffect(() => {
         console.log("current", currentWeather)
         setTempDisplaying(currentWeather)
     })
+    console.log("effect")
+
+    getWeather("Leiria").then(function(res){
+        console.log("leiriazero", res)
+       const resTest = res
+            getWeeklyWeather(res.data.coord.lat, res.data.coord.lon).then(function(res2){
+                console.log("leiria here we go", res2)
+                setxGeeks({res, res2})
+                console.log(res)
+                console.log(resTest)
+
+                dispatch(addCity(res.data.name,res.data.sys.country, res2.current.temp, res2.daily,res2.current.weather[0].icon))
+            })
+    })
    
 }, [])
-
+useEffect(() => {
+console.log("xgeeks",xGeeks)
+}, [xGeeks])
 function inputChange(e) {
 console.log(e.target.value)
 setSearch(e.target.value)
 }
+
+
+if (window.navigator.geolocation) {
+    // Geolocation available
+    window.navigator.geolocation
+    .getCurrentPosition(console.log, console.log);
+   } 
+
+
 
 const getCi = getWeather(search)
 
 
 
 function getCity(){
-
 // verify if we have this search city already
 if( cities.find(item => item.city.toLowerCase() === search.toLowerCase())) return alert("we have it")
 

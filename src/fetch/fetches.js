@@ -19,6 +19,8 @@ export const testing = async () => {
 
 
 export async function getWeather(search) {
+    console.log("test running", search)
+    if(search)
 try{
     console.log("searching")
     let url = 'https://api.openweathermap.org/data/2.5/weather?q=' + search + "&appid=" + key + "&units=metric"
