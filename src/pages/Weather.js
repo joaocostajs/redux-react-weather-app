@@ -5,6 +5,7 @@ import {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {addCity, deleteCity} from '../actions'
 import {DaysDisplay} from '../components/daysDisplay'
+import {CityLi} from '../components/CityLi'
 
 const key = process.env.REACT_APP_API_KEY
 
@@ -117,13 +118,8 @@ function showTemperatureOfCity(cityId){
              {cities["1"] ? Object.keys(cities).map((key, idx) =>
             //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
             idx === 0 ? '' :
-            <div style={{display:"grid", gridTemplateColumns:"4fr 1fr"}}>
-             <p onClick={() => showTemperatureOfCity(cities[key].id)}>{cities[key].id} {cities[key].city},{cities[key].country} </p>
-                  {/* <p>{cities[key].id} {cities[key].city},{cities[key].country} </p> */}
-                  <img src="/trash.svg" alt="" onClick={() => dispatch(deleteCity(cities[key].id))}/>
-
-              </div>
-              ) : null}
+                 <CityLi cities={cities} k={key} showTemperatureOfCity={showTemperatureOfCity} dispatch={dispatch} deleteCity={deleteCity}/>
+            ) : null}
 
             </div>
             
