@@ -24,24 +24,24 @@ function WeatherPage () {
     let city = cities["1"] ? cities["1"].city : "city"
 
 
-useEffect(() => {
+// useEffect(() => {
 
-}, [tempDisplaying])
+// }, [tempDisplaying])
 
 
 
 let lat = 0
-function showPosition(position) {
-    lat = position.coords.latitude
-    console.log("lat:",  position.coords.latitude)
-}
+// function showPosition(position) {
+//     lat = position.coords.latitude
+//     console.log("lat:",  position.coords.latitude)
+// }
 
 const [xGeeks, setxGeeks] = useState()
 useEffect(() => {
     getWeeklyWeather().then(function(res){
         console.log("initial res", res)
-        dispatch(addCity(res.i.data.city,res.i.data.country, res.response.data.current.temp, res.response.data.daily,res.response.data.current.weather[0].icon))
-        const currentWeather = [res.i.data.city,res.i.data.country, res.response.data.current.temp, res.response.data.daily, res.response.data.current.weather[0].icon]
+        dispatch(addCity(res.i.data.city,res.i.data.country, res.response.data.current.temp, res.response.data.daily,res.response.data.current.weather[0].icon,res.response.data.current.weather[0].main))
+        const currentWeather = [res.i.data.city,res.i.data.country, res.response.data.current.temp, res.response.data.daily, res.response.data.current.weather[0].icon,res.response.data.current.weather[0].main]
         console.log("current", currentWeather)
         setTempDisplaying(currentWeather)
     })
@@ -52,7 +52,7 @@ useEffect(() => {
                 //this setxGeeks should be improved since its irrelevant and just used to trigger the use effect related with xgeeks
                 setxGeeks({res, res2})
 
-                dispatch(addCity(res.data.name,res.data.sys.country, res2.current.temp, res2.daily,res2.current.weather[0].icon))
+                dispatch(addCity(res.data.name,res.data.sys.country, res2.current.temp, res2.daily,res2.current.weather[0].icon, res2.current.weather[0].main))
             })
     })
    
@@ -180,16 +180,19 @@ transition:.2s ease all;
     return (
         <div>
         <ReactNotification />
-        <div style={{display:"grid", gridTemplateColumns:"4fr 2fr"}}>
-             {console.log("rendering.........")}
-             <div>
-             <h1>Weather page</h1>
+        <div style={{display:"grid", gridTemplateColumns:"1fr 300px"}}>
+             <div >
              {tempDisplaying ? 
-             <div>   
-             <img src={"http://openweathermap.org/img/w/" +  tempDisplaying[4] + ".png"} alt=""/>    
-            <h1>{tempDisplaying[0]}</h1>
-            <p>{tempDisplaying[1]}</p>
-            <h1>{tempDisplaying[2]}</h1>
+             <div style={{height:"70vh",display:"grid", alignItems:"center",marginLeft:"4em" }}>   
+             <div>
+                <h1 style={{fontSize:"5em", display:"inline-block", marginRight:".5em"}}>{tempDisplaying[2]} º</h1>
+                <div style={{display:"inline-block"}}>
+                <h1 style={{display:"inline-block"}}>{tempDisplaying[0]}</h1>
+                <p >{tempDisplaying[1]}</p>
+             </div>
+        
+            <p style={{display:"inline-block", marginLeft:"2em"}}>{tempDisplaying[5]}  <img style={{position:"relative", top:"1em"}} src={"http://openweathermap.org/img/w/" +  tempDisplaying[4] + ".png"} alt=""/>   </p>
+            </div>
 </div>
 : "loading"}
 <center>

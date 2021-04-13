@@ -7,9 +7,11 @@
 
  - if the current location fails them it should show leiria location
 
-- after typing in search input trigger function by clicking enter key
+ ✅ after typing in search input trigger function by clicking enter key
+      - show that city on enter
 
- - add leiria location and show it on screen
+ ✅ add leiria location and show it on screen
+      - make it look nice
 
  - clean the fetches functions
 
