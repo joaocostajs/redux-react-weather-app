@@ -1,11 +1,13 @@
 ✅  if city searched is already in store ignore the user request and give him feedback
-      - improve feedback, dont show just a alert
+      ✅ improve feedback, dont show just a alert
 
  ✅ connect click for the lower right section, current location weather, to display in the main section
 
  - change location method
 
  - if the current location fails them it should show leiria location
+
+- after typing in search input trigger function by clicking enter key
 
  - add leiria location and show it on screen
 
@@ -17,6 +19,7 @@
 
  - refactor code 
     ✅ refactored the 7 days item to a component
+    ✅ refactored search function to inline function
 
  - add comments 
 

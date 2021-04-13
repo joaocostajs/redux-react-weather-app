@@ -6,6 +6,9 @@ import {useSelector, useDispatch} from 'react-redux';
 import {addCity, deleteCity} from '../actions'
 import {DaysDisplay} from '../components/daysDisplay'
 import {CityLi} from '../components/CityLi'
+import ReactNotification from 'react-notifications-component'
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css'
 
 const key = process.env.REACT_APP_API_KEY
 
@@ -21,7 +24,7 @@ function WeatherPage () {
 useEffect(() => {
 
 }, [tempDisplaying])
-    // getWeather()
+
 
 
 let lat = 0
@@ -42,8 +45,6 @@ useEffect(() => {
     console.log("effect")
 
     getWeather("Leiria").then(function(res){
-        console.log("leiriazero", res)
-       const resTest = res
             getWeeklyWeather(res.data.coord.lat, res.data.coord.lon).then(function(res2){
                 //this setxGeeks should be improved since its irrelevant and just used to trigger the use effect related with xgeeks
                 setxGeeks({res, res2})
@@ -58,9 +59,28 @@ console.log("xgeeks",xGeeks)
 const leiria = cities.find(city => city.city === "Leiria")
 setxGeeks(leiria)
 }, [xGeeks])
-function inputChange(e) {
-console.log(e.target.value)
-setSearch(e.target.value)
+
+const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+        if(search.length > 0){
+            getCity(search)
+        }else{
+            store.addNotification({
+                title: "Info",
+                message: "Type a city before searching",
+                type: "warning",
+                insert: "top",
+                container: "top-center",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                  duration: 3000,
+                  onScreen: true
+                }
+
+        })
+    }
+  }
 }
 
 
@@ -78,13 +98,41 @@ const getCi = getWeather(search)
 
 function getCity(){
 // verify if we have this search city already
-if( cities.find(item => item.city.toLowerCase() === search.toLowerCase())) return alert("we have it")
+if( cities.find(item => item.city.toLowerCase() === search.toLowerCase())) return  store.addNotification({
+    title: "Info",
+    message: "You already have the searched city",
+    type: "info",
+    insert: "top",
+    container: "top-center",
+    animationIn: ["animate__animated", "animate__fadeIn"],
+    animationOut: ["animate__animated", "animate__fadeOut"],
+    dismiss: {
+      duration: 3000,
+      onScreen: true
+    }
+  });
 
 
 
 getCi.then(function(result) {
     console.log("testing", result)
     const searchResult = result
+    console.log("result from search here", searchResult)
+    //if our search fails then ask the user to provide a valid search
+    if (searchResult === undefined) return store.addNotification({
+        title: "Warning",
+        message: "Type a valid city on the search",
+        type: "danger",
+        insert: "top",
+        container: "top-center",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          onScreen: true
+        }
+      });
+
     // once i know the city i can then fetch info about it
     const allDays = getWeeklyWeather(result.data.coord.lat, result.data.coord.lon)
 
@@ -109,7 +157,8 @@ function showTemperatureOfCity(cityId){
 
 
     return (
-       
+        <div>
+        <ReactNotification />
         <div style={{display:"grid", gridTemplateColumns:"4fr 2fr"}}>
              {console.log("rendering.........")}
              <div>
@@ -138,12 +187,13 @@ function showTemperatureOfCity(cityId){
 
         <div style={{height:"calc(100vh - 4em)",backgroundColor:"aliceBlue", padding:"2em 0"}}>
             <div style={{height:"80vh"}}>
-            <input type="text" placeholder="search for city" style={{width:"80%"}} onChange={inputChange}/>
+            <input type="text" placeholder="search for city" style={{width:"80%"}} onChange={ (e) => setSearch(e.target.value)} onKeyDown={handleKeyDown}/>
             <button onClick={() => getCity(search)}>search</button>
            
              {cities["1"] ? Object.keys(cities).map((key, idx) =>
             //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
             idx === 0 ? '' :
+            cities[key].city === "Leiria" ? '' :
                  <CityLi cities={cities} k={key} showTemperatureOfCity={showTemperatureOfCity} dispatch={dispatch} deleteCity={deleteCity}/>
             ) : null}
 
@@ -165,7 +215,7 @@ function showTemperatureOfCity(cityId){
 
         </div>
         </div>
-       
+        </div>
        
     )
 }
