@@ -219,7 +219,7 @@ transition:.2s ease all;
             //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
             idx === 0 ? '' :
             cities[key].city === "Leiria" ? '' :
-                 <CityLi cities={cities} k={key} showTemperatureOfCity={showTemperatureOfCity} dispatch={dispatch} deleteCity={deleteCity} setState={setActiveIndex} state={activeIndex}/>
+                 <CityLi cities={cities} k={key} showTemperatureOfCity={showTemperatureOfCity} dispatch={dispatch} deleteCity={deleteCity} setState={setActiveIndex} state={activeIndex} setTempDisplaying={setTempDisplaying}/>
             ) : null}
 
             </div>
