@@ -20,7 +20,7 @@ function WeatherPage () {
     const dispatch = useDispatch()
     const [search, setSearch] = useState("")
     const [tempDisplaying, setTempDisplaying] = useState({})
-    const [activeIndex, setActiveIndex] = useState(0)
+    const [activeIndex, setActiveIndex] = useState()
     let city = cities["1"] ? cities["1"].city : "city"
 
 
@@ -183,7 +183,7 @@ transition:.2s ease all;
         <div style={{display:"grid", gridTemplateColumns:"1fr 300px"}}>
              <div >
              {tempDisplaying ? 
-             <div style={{height:"70vh",display:"grid", alignItems:"center",marginLeft:"4em" }}>   
+             <div style={{height:"50vh",display:"grid", alignItems:"center",marginLeft:"4em" }}>   
              <div>
                 <h1 style={{fontSize:"5em", display:"inline-block", marginRight:".5em"}}>{tempDisplaying[2]} º</h1>
                 <div style={{display:"inline-block"}}>
@@ -210,7 +210,7 @@ transition:.2s ease all;
               </div>
 
         <div style={{height:"calc(100vh - 4em)",backgroundColor:"aliceBlue", padding:"2em 0"}}>
-            <div style={{height:"80vh"}}>
+            <div style={{height:"65vh"}}>
                 <div style={{marginBottom:"2em"}}>
                     <input type="text" placeholder="search for city" style={{width:"80%"}}  onChange={ (e) => setSearch(e.target.value)} onKeyDown={handleKeyDown}/>
                     <div style={{backgroundColor:"white", display:"inline-block"}} onClick={() => getCity(search)}>
@@ -230,13 +230,21 @@ transition:.2s ease all;
 
 <div>
     XGeeks
-    {xGeeks && <p onClick={() => showTemperatureOfCity(xGeeks.id)}>{xGeeks.city}</p>}
+
+    {cities[1] ? xGeeks ?
+
+                 <CityLi cities={cities} k={xGeeks.id - 1} showTemperatureOfCity={showTemperatureOfCity} dispatch={dispatch} deleteCity={false} setState={setActiveIndex} state={activeIndex} setTempDisplaying={setTempDisplaying}/>
+
+    // <p onClick={() => showTemperatureOfCity(xGeeks.id)}>{xGeeks.city}</p>
+        :null
+    :null
+ }
 </div>
 
     <div>
         <p>current location weather</p>
         {cities[0] ? 
-        <p onClick={() => showTemperatureOfCity(cities[0].id)}> { cities[0].city},{ cities[0].country}</p>
+                 <CityLi cities={cities} k={0} showTemperatureOfCity={showTemperatureOfCity} dispatch={dispatch} deleteCity={false} setState={setActiveIndex} state={activeIndex} setTempDisplaying={setTempDisplaying}/>
         : "null"}
     </div>
 
