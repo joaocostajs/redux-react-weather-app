@@ -20,7 +20,7 @@ function WeatherPage () {
     const dispatch = useDispatch()
     const [search, setSearch] = useState("")
     const [tempDisplaying, setTempDisplaying] = useState({})
-
+    const [activeIndex, setActiveIndex] = useState(0)
     let city = cities["1"] ? cities["1"].city : "city"
 
 
@@ -162,10 +162,16 @@ const Input = styled.input`
 border:none;
 border-bottom:1px solid #777;
 background-color:transparent;
+opacity:.7;
+transition:.2s ease all;
     &:focus {
         outline: none;
         box-shadow: none;
         border-bottom:1px solid black;
+    }
+    &:hover{
+        opacity:1;
+
     }
 `
 
@@ -203,7 +209,7 @@ background-color:transparent;
         <div style={{height:"calc(100vh - 4em)",backgroundColor:"aliceBlue", padding:"2em 0"}}>
             <div style={{height:"80vh"}}>
                 <div style={{marginBottom:"2em"}}>
-                    <Input type="text" placeholder="search for city" style={{width:"80%"}} onChange={ (e) => setSearch(e.target.value)} onKeyDown={handleKeyDown}/>
+                    <input type="text" placeholder="search for city" style={{width:"80%"}}  onChange={ (e) => setSearch(e.target.value)} onKeyDown={handleKeyDown}/>
                     <div style={{backgroundColor:"white", display:"inline-block"}} onClick={() => getCity(search)}>
                         <SearchSvg />
                     </div>
@@ -213,7 +219,7 @@ background-color:transparent;
             //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
             idx === 0 ? '' :
             cities[key].city === "Leiria" ? '' :
-                 <CityLi cities={cities} k={key} showTemperatureOfCity={showTemperatureOfCity} dispatch={dispatch} deleteCity={deleteCity}/>
+                 <CityLi cities={cities} k={key} showTemperatureOfCity={showTemperatureOfCity} dispatch={dispatch} deleteCity={deleteCity} setState={setActiveIndex} state={activeIndex}/>
             ) : null}
 
             </div>

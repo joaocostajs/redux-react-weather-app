@@ -1,8 +1,37 @@
-export const CityLi = ({cities, k, showTemperatureOfCity, dispatch, deleteCity}) => {
-    return   <div style={{display:"grid", gridTemplateColumns:"4fr 1fr"}}>
-                 <p onClick={() => showTemperatureOfCity(cities[k].id)}>{cities[k].id} {cities[k].city},{cities[k].country} </p>
-                   {/* <p>{cities[key].id} {cities[key].city},{cities[key].country} </p> */}
-                  <img src="/trash.svg" alt="" onClick={() => dispatch(deleteCity(cities[k].id))}/>
+import styled from 'styled-components'
+import {Trash} from '../components/SVG/searchSvg'
 
-             </div>
+const Element = styled.div`
+
+display:grid;
+grid-template-columns: 4fr 1fr;
+transition: .3s ease all;
+padding:1em;
+&:hover{
+  background:black;
+  color:white;
+  cursor:pointer;
+  & > SVG {
+    stroke:white;
+  }
+}
+`
+const SVG = styled.svg`
+stroke:black;
+transition: .3s ease all;
+`
+
+
+
+
+export const CityLi = ({cities, k, showTemperatureOfCity, dispatch, deleteCity, setState, state}) => {
+    return   <Element className={state === k ? 'active' : ''}onClick={() => {showTemperatureOfCity(cities[k].id); setState(k)}}>
+                 <div>
+                    <h2> {cities[k].city} </h2>
+                    <p> {cities[k].country} </p>
+                 </div>
+                 <SVG onClick={() => dispatch(deleteCity(cities[k].id))}    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></SVG>
+
+
+             </Element>
 }

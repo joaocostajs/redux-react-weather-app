@@ -1,0 +1,11 @@
+/* button active  */
+
+.active{
+    background:black;
+    color:white;
+    cursor:pointer;
+    
+}
+.active svg{
+    stroke:white;
+}
