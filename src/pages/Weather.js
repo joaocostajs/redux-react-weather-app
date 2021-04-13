@@ -9,6 +9,9 @@ import {CityLi} from '../components/CityLi'
 import ReactNotification from 'react-notifications-component'
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css'
+import {SearchSvg} from '../components/SVG/searchSvg'
+
+import styled from 'styled-components'
 
 const key = process.env.REACT_APP_API_KEY
 
@@ -155,6 +158,18 @@ function showTemperatureOfCity(cityId){
 }
 
 
+const Input = styled.input`
+border:none;
+border-bottom:1px solid #777;
+background-color:transparent;
+    &:focus {
+        outline: none;
+        box-shadow: none;
+        border-bottom:1px solid black;
+    }
+`
+
+
 
     return (
         <div>
@@ -187,8 +202,12 @@ function showTemperatureOfCity(cityId){
 
         <div style={{height:"calc(100vh - 4em)",backgroundColor:"aliceBlue", padding:"2em 0"}}>
             <div style={{height:"80vh"}}>
-            <input type="text" placeholder="search for city" style={{width:"80%"}} onChange={ (e) => setSearch(e.target.value)} onKeyDown={handleKeyDown}/>
-            <button onClick={() => getCity(search)}>search</button>
+                <div style={{marginBottom:"2em"}}>
+                    <Input type="text" placeholder="search for city" style={{width:"80%"}} onChange={ (e) => setSearch(e.target.value)} onKeyDown={handleKeyDown}/>
+                    <div style={{backgroundColor:"white", display:"inline-block"}} onClick={() => getCity(search)}>
+                        <SearchSvg />
+                    </div>
+                </div>
            
              {cities["1"] ? Object.keys(cities).map((key, idx) =>
             //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
