@@ -143,7 +143,7 @@ getCi.then(function(result) {
         console.log("got all days for the searched city", result)
         getWeeklyWeather(searchResult.data.coord.lat,searchResult.data.coord.lon, searchResult.data.name, searchResult.data.sys.country).then(function(result) {
        console.log("all days", result) })
-             dispatch(addCity(searchResult.data.name,searchResult.data.sys.country, result.current.temp, result.daily, result.current.weather[0].icon))
+             dispatch(addCity(searchResult.data.name,searchResult.data.sys.country, result.current.temp, result.daily, result.current.weather[0].icon, result.current.weather[0].main))
         })
  })
 
@@ -153,7 +153,7 @@ getCi.then(function(result) {
 function showTemperatureOfCity(cityId){
     const clicked = cities.find(city => city.id === cityId)
     console.log("clicked",clicked)
-    const currentWeather = [clicked.city,clicked.country, clicked.temp, clicked.nextSevenDays, clicked.icon ]
+    const currentWeather = [clicked.city,clicked.country, clicked.temp, clicked.nextSevenDays, clicked.icon, clicked.condition ]
     setTempDisplaying(currentWeather)
 }
 

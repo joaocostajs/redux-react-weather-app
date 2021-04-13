@@ -25,9 +25,8 @@ transition: .3s ease all;
 
 
 
-export const CityLi = ({cities, k, showTemperatureOfCity, dispatch, deleteCity, setState, state, setTempDisplaying}) => {
-  const resetCity = [cities[0].city,cities[0].country, cities[0].temp, cities[0].nextSevenDays, cities[0].icon ]
-  console.log("resetCity",resetCity)
+export const CityLi = ({cities, k, showTemperatureOfCity, dispatch, deleteCity, setState, state}) => {
+
     return   <Element className={state === k ? 'active' : ''} >
                  <div onClick={() => {showTemperatureOfCity(cities[k].id); setState(k)}}>
                     <h2> {cities[k].city} </h2>
