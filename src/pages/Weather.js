@@ -143,6 +143,13 @@ getCi.then(function(result) {
         console.log("got all days for the searched city", result)
         getWeeklyWeather(searchResult.data.coord.lat,searchResult.data.coord.lon, searchResult.data.name, searchResult.data.sys.country).then(function(result) {
        console.log("all days", result) })
+
+       // add new city to the screen of the user
+
+       const currentWeather = [searchResult.data.name, searchResult.data.sys.country,result.current.temp, result.daily, result.current.weather[0].icon, result.current.weather[0].main ]
+       console.log("cccccccc", result)
+       setTempDisplaying(currentWeather)
+       // add new city to redux store
              dispatch(addCity(searchResult.data.name,searchResult.data.sys.country, result.current.temp, result.daily, result.current.weather[0].icon, result.current.weather[0].main))
         })
  })
