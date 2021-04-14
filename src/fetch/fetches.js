@@ -89,3 +89,27 @@ export async function getWeeklyWeather() {
    
    
 }
+
+
+
+export function getCity(cities, search, store, notification, setTempDisplaying, dispatch, addCity){
+    // verify if we have this search city already
+    if( cities.find(item => item.city.toLowerCase() === search.toLowerCase())) return  store.addNotification(notification("Info", "You already have this city searched", "info"))
+    
+    const getCity = getWeather(search)
+    getCity.then(function(result) {
+        const searchResult = result
+        //if our search fails then ask the user to provide a valid search
+        if (searchResult === undefined) return  store.addNotification(notification("Warning", "Type a valid city on the search","danger"))
+    
+        // once i know the city i can then fetch info about it
+        getWeeklyWeather(result.data.coord.lat, result.data.coord.lon)
+                .then(function(result) {
+                 // add new city to the screen of the user
+                 const currentWeather = [searchResult.data.name, searchResult.data.sys.country,result.current.temp, result.daily, result.current.weather[0].icon, result.current.weather[0].main ]
+                setTempDisplaying(currentWeather)
+                 // add new city to redux store
+                 dispatch(addCity(searchResult.data.name,searchResult.data.sys.country, result.current.temp, result.daily, result.current.weather[0].icon, result.current.weather[0].main))
+            })
+     })
+    }
