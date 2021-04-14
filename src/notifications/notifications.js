@@ -1,5 +1,3 @@
-import { store } from 'react-notifications-component';
-
 export const notification = (title, message,type ) => {
     console.log(title, message, type)
     return {

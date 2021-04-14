@@ -14,6 +14,22 @@ import {SearchSvg} from '../components/SVG/searchSvg'
 import styled from 'styled-components'
 import {notification} from '../notifications/notifications'
 const key = process.env.REACT_APP_API_KEY
+const Input = styled.input`
+border:none;
+border-bottom:1px solid #777;
+background-color:transparent;
+opacity:.7;
+transition:.2s ease all;
+    &:focus {
+        outline: none;
+        box-shadow: none;
+        border-bottom:1px solid black;
+    }
+    &:hover{
+        opacity:1;
+    }
+    `
+
 
 function WeatherPage () {
     const cities = useSelector(state => state.cities)
@@ -68,20 +84,7 @@ const handleKeyDown = (event) => {
         if(search.length > 0){
             getCity(search)
         }else{
-            store.addNotification({
-                title: "Info",
-                message: "Type a city before searching",
-                type: "warning",
-                insert: "top",
-                container: "top-center",
-                animationIn: ["animate__animated", "animate__fadeIn"],
-                animationOut: ["animate__animated", "animate__fadeOut"],
-                dismiss: {
-                  duration: 3000,
-                  onScreen: true
-                }
-
-        })
+            store.addNotification(notification("Info","Type a city before searching","warning"))
     }
   }
 }
@@ -91,8 +94,7 @@ if (window.navigator.geolocation) {
     // Geolocation available
     window.navigator.geolocation
     .getCurrentPosition(console.log, console.log);
-   } 
-
+   }
 
 
 const getCi = getWeather(search)
@@ -103,26 +105,12 @@ function getCity(){
 // verify if we have this search city already
 if( cities.find(item => item.city.toLowerCase() === search.toLowerCase())) return  store.addNotification(notification("Info", "You already have this city searched", "info"))
 
-
-
 getCi.then(function(result) {
     console.log("testing", result)
     const searchResult = result
     console.log("result from search here", searchResult)
     //if our search fails then ask the user to provide a valid search
-    if (searchResult === undefined) return store.addNotification({
-        title: "Warning",
-        message: "Type a valid city on the search",
-        type: "danger",
-        insert: "top",
-        container: "top-center",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 3000,
-          onScreen: true
-        }
-      });
+    if (searchResult === undefined) return  store.addNotification(notification("Warning", "Type a valid city on the search","danger"))
 
     // once i know the city i can then fetch info about it
     const allDays = getWeeklyWeather(result.data.coord.lat, result.data.coord.lon)
@@ -141,7 +129,6 @@ getCi.then(function(result) {
              dispatch(addCity(searchResult.data.name,searchResult.data.sys.country, result.current.temp, result.daily, result.current.weather[0].icon, result.current.weather[0].main))
         })
  })
-
 }
 
 
@@ -153,21 +140,7 @@ function showTemperatureOfCity(cityId){
 }
 
 
-const Input = styled.input`
-border:none;
-border-bottom:1px solid #777;
-background-color:transparent;
-opacity:.7;
-transition:.2s ease all;
-    &:focus {
-        outline: none;
-        box-shadow: none;
-        border-bottom:1px solid black;
-    }
-    &:hover{
-        opacity:1;
-    }
-`
+
 
 
 
@@ -176,7 +149,7 @@ transition:.2s ease all;
         <ReactNotification />
 
         <div className="mainWrapper">
-             <div>
+             <div style={{height:"100vh", overflowY:"scroll"}}>
              {tempDisplaying ? 
 
                 // ----------------------------  add component with current weather data and replace the syntax bellow
@@ -209,7 +182,7 @@ transition:.2s ease all;
         <div style={{height:"calc(100vh - 4em)",backgroundColor:"aliceBlue", padding:"2em 0"}}>
             <div style={{height:"65vh"}}>
                 <div style={{marginBottom:"2em"}}>
-                    <input type="text" placeholder="search for city" style={{width:"80%"}}  onChange={ (e) => setSearch(e.target.value)} onKeyDown={handleKeyDown}/>
+                    <Input type="text" placeholder="search for city" style={{width:"80%"}}  onChange={ (e) => setSearch(e.target.value)} onKeyDown={handleKeyDown}/>
                     <div style={{backgroundColor:"white", display:"inline-block"}} onClick={() => getCity(search)}>
                         <SearchSvg />
                     </div>
