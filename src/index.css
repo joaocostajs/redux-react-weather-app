@@ -15,3 +15,8 @@ code {
 *{
   margin:0;
 }
+
+.mainWrapper{
+  display:grid;
+  grid-template-columns:1fr 300px;
+}

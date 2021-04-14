@@ -12,7 +12,7 @@ import 'react-notifications-component/dist/theme.css'
 import {SearchSvg} from '../components/SVG/searchSvg'
 
 import styled from 'styled-components'
-
+import {notification} from '../notifications/notifications'
 const key = process.env.REACT_APP_API_KEY
 
 function WeatherPage () {
@@ -101,19 +101,7 @@ const getCi = getWeather(search)
 
 function getCity(){
 // verify if we have this search city already
-if( cities.find(item => item.city.toLowerCase() === search.toLowerCase())) return  store.addNotification({
-    title: "Info",
-    message: "You already have the searched city",
-    type: "info",
-    insert: "top",
-    container: "top-center",
-    animationIn: ["animate__animated", "animate__fadeIn"],
-    animationOut: ["animate__animated", "animate__fadeOut"],
-    dismiss: {
-      duration: 3000,
-      onScreen: true
-    }
-  });
+if( cities.find(item => item.city.toLowerCase() === search.toLowerCase())) return  store.addNotification(notification("Info", "You already have this city searched", "info"))
 
 
 
@@ -178,7 +166,6 @@ transition:.2s ease all;
     }
     &:hover{
         opacity:1;
-
     }
 `
 
@@ -187,30 +174,33 @@ transition:.2s ease all;
     return (
         <div>
         <ReactNotification />
-        <div style={{display:"grid", gridTemplateColumns:"1fr 300px"}}>
-             <div >
+
+        <div className="mainWrapper">
+             <div>
              {tempDisplaying ? 
+
+                // ----------------------------  add component with current weather data and replace the syntax bellow
+
              <div style={{height:"50vh",display:"grid", alignItems:"center",marginLeft:"4em" }}>   
              <div>
                 <h1 style={{fontSize:"5em", display:"inline-block", marginRight:".5em"}}>{tempDisplaying[2]} º</h1>
                 <div style={{display:"inline-block"}}>
-                <h1 style={{display:"inline-block"}}>{tempDisplaying[0]}</h1>
-                <p >{tempDisplaying[1]}</p>
-             </div>
-        
-            <p style={{display:"inline-block", marginLeft:"2em"}}>{tempDisplaying[5]}  <img style={{position:"relative", top:"1em"}} src={"http://openweathermap.org/img/w/" +  tempDisplaying[4] + ".png"} alt=""/>   </p>
-            </div>
-</div>
-: "loading"}
-<center>
-<div style={{display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(100px, 1fr))", gap:"1em", width:"90%"}}>
-{tempDisplaying[3] ? Object.keys(tempDisplaying[3]).map((key, idx) =>
-                    //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
-                    idx === 0 ? '' :
-                    <DaysDisplay item={tempDisplaying[3]} k={key}/>
-                    ) : null}
-</div>
-</center>
+                     <h1 style={{display:"inline-block"}}>{tempDisplaying[0]}</h1>
+                     <p >{tempDisplaying[1]}</p>
+                </div>
+                <p style={{display:"inline-block", marginLeft:"2em"}}>{tempDisplaying[5]}  <img style={{position:"relative", top:"1em"}} src={"http://openweathermap.org/img/w/" +  tempDisplaying[4] + ".png"} alt=""/>   </p>
+                 </div>
+                 </div>
+                : "loading"}
+                <center>
+                <div style={{display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(100px, 1fr))", gap:"1em", width:"90%"}}>
+                {tempDisplaying[3] ? Object.keys(tempDisplaying[3]).map((key, idx) =>
+                                    //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
+                                    idx === 0 ? '' :
+                                    <DaysDisplay item={tempDisplaying[3]} k={key}/>
+                                    ) : null}
+                </div>
+                </center>
 
            
              
