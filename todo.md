@@ -28,3 +28,5 @@
 ✅ on the searched cities add also the country
 
 - create function for the notifications and refactor it
+
+- reverse order of searched cities
