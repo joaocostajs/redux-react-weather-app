@@ -9,3 +9,23 @@
 .active svg{
     stroke:white;
 }
+
+
+
+.liElement{
+    display:grid;
+  grid-template-columns: 4fr 1fr;
+  transition: .3s ease all;
+  padding:1em;
+  align-items:center;
+  }
+  
+  .liElement:hover{
+    background:black;
+    color:white;
+    cursor:pointer;
+  }
+  
+  .liElement:hover svg{
+    stroke:white;
+  }

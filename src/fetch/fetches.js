@@ -94,6 +94,7 @@ export async function getWeeklyWeather() {
 
 export function getCity(cities, search, store, notification, setTempDisplaying, dispatch, addCity){
     // verify if we have this search city already
+    console.log("cccccity",cities)
     if( cities.find(item => item.city.toLowerCase() === search.toLowerCase())) return  store.addNotification(notification("Info", "You already have this city searched", "info"))
     
     const getCity = getWeather(search)
