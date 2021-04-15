@@ -7,24 +7,24 @@ function WeatherPage () {
     const [tempDisplaying, setTempDisplaying] = useState({})
     const [activeIndex, setActiveIndex] = useState()
     const [xGeeks, setxGeeks] = useState()
-    const [currentLocation, setCurrentLocation] = useState(false)
+    const [isLocation, setisLocation] = useState(false)
 
 
     useEffect(() => {
         //when page loads get the current location and also add location for XGeeks Leiria
-        getLocation(setxGeeks, setTempDisplaying, dispatch, addCity)
+        getLocation(setxGeeks, setTempDisplaying, dispatch, addCity,  setisLocation)
     }, [])
 
-    useEffect(() => {
-        if(currentLocation){
-            getWeather("Leiria").then(function(res){
-                getWeeklyWeather(res.data.coord.lat, res.data.coord.lon).then(function(res2){
-                    setxGeeks({res, res2})
-                    dispatch(addCity(res.data.name,res.data.sys.country, res2.current.temp, res2.daily,res2.current.weather[0].icon, res2.current.weather[0].main))
-                })
-            }) 
-        } 
-    },[currentLocation])
+    // useEffect(() => {
+    //     if(currentLocation){
+    //         getWeather("Leiria").then(function(res){
+    //             getWeeklyWeather(res.data.coord.lat, res.data.coord.lon).then(function(res2){
+    //                 setxGeeks({res, res2})
+    //                 dispatch(addCity(res.data.name,res.data.sys.country, res2.current.temp, res2.daily,res2.current.weather[0].icon, res2.current.weather[0].main))
+    //             })
+    //         }) 
+    //     } 
+    // },[currentLocation])
 
     useEffect(() => {
         // wait to have leiria location and then display it otherwise dont show
@@ -94,23 +94,34 @@ function WeatherPage () {
                 
                 
                     <div>
-                    {cities[1] ? xGeeks ?
-                             <div>
-                                <p>XGeeks</p>
-                                <CityLi cities={cities} k={xGeeks.id - 1} dispatch={dispatch} deleteCity={false} setState={setActiveIndex} state={activeIndex} setTempDisplaying={setTempDisplaying}/>
-                                </div>
+                        {!isLocation ?
+                             xGeeks ? 
+                                cities[0] ? 
+                                    <div>
+                                    <p>XGeeks</p>
+                                    <CityLi cities={cities} k={xGeeks.id - 1} dispatch={dispatch} deleteCity={false} setState={setActiveIndex} state={activeIndex} setTempDisplaying={setTempDisplaying}/>
+                                    </div>
+                                :null
                             :null
-                        :null
+                        :
+                              xGeeks ? 
+                                cities[1] ? 
+                                    <div>
+                                    <p>XGeeks</p>
+                                    <CityLi cities={cities} k={xGeeks.id - 1} dispatch={dispatch} deleteCity={false} setState={setActiveIndex} state={activeIndex} setTempDisplaying={setTempDisplaying}/>
+                                    </div>
+                                :null
+                             :null
                         }
                     </div>
 
                     <div>
-                    {cities[0] ? 
+                    {isLocation ? cities[0] ? 
                             <div>
                                 <p>current location weather</p>
                                 <CityLi cities={cities} k={0} dispatch={dispatch} deleteCity={false} setState={setActiveIndex} state={activeIndex} setTempDisplaying={setTempDisplaying}/>
                             </div>
-                       : "Loading"}
+                       : null : null}
                     </div>
 
 
