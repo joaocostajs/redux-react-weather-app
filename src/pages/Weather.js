@@ -14,7 +14,7 @@ function WeatherPage () {
         //when page loads get the current location and also add location for XGeeks Leiria
         getLocation(setxGeeks, setTempDisplaying, dispatch, addCity)
     }, [])
-    
+
     useEffect(() => {
         if(currentLocation){
             getWeather("Leiria").then(function(res){
@@ -23,7 +23,6 @@ function WeatherPage () {
                     dispatch(addCity(res.data.name,res.data.sys.country, res2.current.temp, res2.daily,res2.current.weather[0].icon, res2.current.weather[0].main))
                 })
             }) 
-
         } 
     },[currentLocation])
 
@@ -65,7 +64,7 @@ function WeatherPage () {
                                 //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
                                 idx === 0 ? '' :
                                 <DaysDisplay item={tempDisplaying[3]} k={key}/>
-                                ) : null}
+                                ) : "Loading"}
                         </div>
                     </center>
                 </div>
@@ -95,19 +94,23 @@ function WeatherPage () {
                 
                 
                     <div>
-                       <p>XGeeks</p>
-                        {cities[1] ? xGeeks ?
+                    {cities[1] ? xGeeks ?
+                             <div>
+                                <p>XGeeks</p>
                                 <CityLi cities={cities} k={xGeeks.id - 1} dispatch={dispatch} deleteCity={false} setState={setActiveIndex} state={activeIndex} setTempDisplaying={setTempDisplaying}/>
+                                </div>
                             :null
                         :null
                         }
                     </div>
 
                     <div>
-                        <p>current location weather</p>
-                        {cities[0] ? 
+                    {cities[0] ? 
+                            <div>
+                                <p>current location weather</p>
                                 <CityLi cities={cities} k={0} dispatch={dispatch} deleteCity={false} setState={setActiveIndex} state={activeIndex} setTempDisplaying={setTempDisplaying}/>
-                        : "null"}
+                            </div>
+                       : "Loading"}
                     </div>
 
 
