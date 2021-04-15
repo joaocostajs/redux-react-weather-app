@@ -16,6 +16,6 @@ import 'react-notifications-component/dist/theme.css'
 import {Input} from '../styledComponents/styles'
 // helping functions
 import {getWeather, getWeeklyWeather, getCity} from '../fetch/fetches'
+import {getLocation} from '../location/location'
 
-
-export {ReactNotification, notification, store, useState, useEffect, useSelector, useDispatch, addCity, deleteCity, DaysDisplay, CityLi, SearchSvg, Input, getWeather, getWeeklyWeather, getCity,MainWeatherDisplay}
+export {ReactNotification, notification, store, useState, useEffect, useSelector, useDispatch, addCity, deleteCity, DaysDisplay, CityLi, SearchSvg, Input, getWeather, getWeeklyWeather, getCity,MainWeatherDisplay, getLocation}

@@ -1,4 +1,4 @@
-import {ReactNotification, notification, store, useState, useEffect, useSelector, useDispatch, addCity, deleteCity, DaysDisplay, CityLi, SearchSvg, Input, getWeather, getWeeklyWeather, getCity, MainWeatherDisplay} from './weatherImports';
+import {ReactNotification, notification, store, useState, useEffect, useSelector, useDispatch, addCity, deleteCity, DaysDisplay, CityLi, SearchSvg, Input, getWeather, getWeeklyWeather, getCity, MainWeatherDisplay, getLocation} from './weatherImports';
 
 function WeatherPage () {
     const cities = useSelector(state => state.cities)
@@ -12,14 +12,9 @@ function WeatherPage () {
 
     useEffect(() => {
         //when page loads get the current location and also add location for XGeeks Leiria
-        getLocation()
-       
-        // getWeeklyWeather()
-
-        // })
-
-       
+        getLocation(setxGeeks, setTempDisplaying, dispatch, addCity)
     }, [])
+    
     useEffect(() => {
         if(currentLocation){
             getWeather("Leiria").then(function(res){
@@ -48,49 +43,7 @@ function WeatherPage () {
             }
         }
     }
-function getLocation(){
 
-
-    if (window.navigator.geolocation) {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition, showError);
-          } else { 
-           alert( "Geolocation is not supported by this browser.")
-          }
-    }
-}
-function showPosition(position) {
-    console.log("PPPPPPPP",position)
-            getWeeklyWeather(position.coords.latitude,  position.coords.longitude).then(function(res){
-                console.log("RRRRRR", res)   
-                const cityName = res.timezone.split("/")[1]
-
-                   getWeather(cityName).then(function(res){
-                    getWeeklyWeather(res.data.coord.lat, res.data.coord.lon).then(function(res2){
-                        setxGeeks({res, res2})
-                        dispatch(addCity(res.data.name,res.data.sys.country, res2.current.temp, res2.daily,res2.current.weather[0].icon, res2.current.weather[0].main))
-                        const currentWeather = [res.data.name,res.data.country, res2.current.temp,res2.daily,res2.current.weather[0].icon, res2.current.weather[0].main ]
-                        setTempDisplaying(currentWeather)
-                    })
-                }) 
-                // dispatch(addCity(res.i.data.city,res.i.data.country, res.response.data.current.temp, res.response.data.daily,res.response.data.current.weather[0].icon,res.response.data.current.weather[0].main))
-                    // const currentWeather = [res.i.data.city,res.i.data.country, res.response.data.current.temp, res.response.data.daily, res.response.data.current.weather[0].icon,res.response.data.current.weather[0].main]
-                    // setTempDisplaying(currentWeather)
-                    // setCurrentLocation(true)
-            })
-  }
-
-  function showError(error) {
-    //if we have an error then show a specific location, in this case Leiria
-    getWeather("Leiria").then(function(res){
-        getWeeklyWeather(res.data.coord.lat, res.data.coord.lon).then(function(res2){
-            setxGeeks({res, res2})
-            dispatch(addCity(res.data.name,res.data.sys.country, res2.current.temp, res2.daily,res2.current.weather[0].icon, res2.current.weather[0].main))
-            const currentWeather = [res.data.name,res.data.country, res2.current.temp,res2.daily,res2.current.weather[0].icon, res2.current.weather[0].main ]
-            setTempDisplaying(currentWeather)
-        })
-    }) 
-  }
 
 
 
