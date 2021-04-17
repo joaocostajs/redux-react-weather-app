@@ -5,7 +5,7 @@
     ],
     "rules": {
       "no-unused-vars": "off",
-        "no-restricted-syntax": ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"]
+        "no-restricted-syntax": ["error", "SequenceExpression"]
     },
     "plugins": ["react", "react-hooks"]
   }
