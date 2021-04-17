@@ -14,6 +14,7 @@ function WeatherPage () {
         //when page loads get the current location and also add location for XGeeks Leiria
         getLocation(setxGeeks, setTempDisplaying, dispatch, addCity,  setisLocation)
         setActiveIndex(0)
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -21,6 +22,7 @@ function WeatherPage () {
         // wait to have leiria location and then display it otherwise dont show
         const leiria = cities.find(city => city.city === "Leiria")
         setxGeeks(leiria)
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [xGeeks])
 
     const handleKeyDown = (event) => {
