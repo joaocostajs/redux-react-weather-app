@@ -58,9 +58,9 @@ export async function getWeeklyWeather() {
                         const all = {response,i}
                         allres = all
                         
-                          const r  = response.data
+                          const r  = [response.data, i]
                             /* eslint no-restricted-syntax: ["error"] */
-                        return response.data, i
+                        return r
                     })
                     return res2
             })
