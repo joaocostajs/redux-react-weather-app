@@ -4,7 +4,8 @@
       "react-app"
     ],
     "rules": {
-      "no-unused-vars": "off"
+      "no-unused-vars": "off",
+        "no-restricted-syntax": ["error", "SequenceExpression"]
     },
     "plugins": ["react", "react-hooks"]
   }
