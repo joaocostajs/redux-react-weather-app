@@ -1,6 +1,20 @@
-# Getting Started with Create React App
+# Assignment Exercise Weather app with React and Redux
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+##[Live demo](https://xgeeks-assignment-joaocostajs.netlify.app)
+
+
+![Final weather app](https://res.cloudinary.com/joaocostajs/image/upload/v1618652885/Screenshot_2021-04-17_at_11.46.15.png)
+
+
+## Next steps
+
+- [ ] Update design
+- [ ] Make it responsive
+- [ ] Refactor code
+- [ ] Fix location in safari
+
 
 ## Available Scripts
 

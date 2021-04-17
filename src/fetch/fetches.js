@@ -53,7 +53,6 @@ export async function getWeeklyWeather() {
                 lon = response.data.lon
                 const res2 = axios.get(`${url}${lat}&lon=${lon}&exclude=minutely,alerts,hourly&appid=${key}&units=metric`)
                     .then(function(response){
-                        console.log("here the week:", response.data)
                           /* eslint no-restricted-syntax: ["error"] */
                         const all = {response,i}
                         allres = all
