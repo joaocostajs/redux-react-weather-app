@@ -1,4 +1,4 @@
-import {ReactNotification, notification, store, useState, useEffect, useSelector, useDispatch, addCity, deleteCity, DaysDisplay, CityLi, SearchSvg, Input, getWeather, getWeeklyWeather, getCity, MainWeatherDisplay, getLocation} from './weatherImports';
+import {ReactNotification, notification, store, useState, useEffect, useSelector, useDispatch, addCity, deleteCity, DaysDisplay, CityLi, SearchSvg, Input, getCity, MainWeatherDisplay, getLocation} from './weatherImports';
 
 function WeatherPage () {
     const cities = useSelector(state => state.cities)
@@ -13,18 +13,9 @@ function WeatherPage () {
     useEffect(() => {
         //when page loads get the current location and also add location for XGeeks Leiria
         getLocation(setxGeeks, setTempDisplaying, dispatch, addCity,  setisLocation)
+        setActiveIndex(0)
     }, [])
 
-    // useEffect(() => {
-    //     if(currentLocation){
-    //         getWeather("Leiria").then(function(res){
-    //             getWeeklyWeather(res.data.coord.lat, res.data.coord.lon).then(function(res2){
-    //                 setxGeeks({res, res2})
-    //                 dispatch(addCity(res.data.name,res.data.sys.country, res2.current.temp, res2.daily,res2.current.weather[0].icon, res2.current.weather[0].main))
-    //             })
-    //         }) 
-    //     } 
-    // },[currentLocation])
 
     useEffect(() => {
         // wait to have leiria location and then display it otherwise dont show
@@ -35,17 +26,13 @@ function WeatherPage () {
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             if(search.length > 0){
-                console.log("the cities before", cities)
                 getCity(cities, search, store, notification, setTempDisplaying, dispatch, addCity)
+                setActiveIndex()
             }else{
                 store.addNotification(notification("Info","Type a city before searching","warning"))
             }
         }
     }
-
-
-
-
 
     return (
         <div>
@@ -53,9 +40,7 @@ function WeatherPage () {
 
             <div className="mainWrapper">
                 <div style={{height:"100vh", overflowY:"scroll"}}>
-                    {console.log("temp", tempDisplaying)}
                     {tempDisplaying ? 
-                    // console.log("how?????", tempDisplaying)
                         <MainWeatherDisplay tempDisplaying={tempDisplaying} /> 
                     : "loading"}
                     <center>
@@ -73,17 +58,16 @@ function WeatherPage () {
                 <div style={{height:"65vh",}}>
                     <div style={{marginBottom:"2em"}}>
                         <Input type="text" placeholder="search for city"  onChange={ (e) => setSearch(e.target.value)} onKeyDown={handleKeyDown}/>
-                        <div style={{backgroundColor:"white", display:"inline-block"}} onClick={() =>  getCity(cities, search, store, notification, setTempDisplaying, dispatch, addCity)}>
+                        <div className="search" onClick={() =>  getCity(cities, search, store, notification, setTempDisplaying, dispatch, addCity)}>
                             <SearchSvg />
                         </div>
                     </div>
 
             <div style={{height:"70%", overflowY:"scroll"}}>
                         {cities["1"] ?
-                        // console.log("looooooooog", cities, cities.reverse())
-                        Object.keys(cities).map((key, idx) =>
+                        Object.keys(cities).reverse().map((key, idx) =>
                         //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
-                        idx === 0 ? '' :
+                        idx === cities.length - 1 ? '' :
                         cities[key].city === "Leiria" ? '' :
                             <CityLi cities={cities} k={key} dispatch={dispatch} deleteCity={deleteCity} setState={setActiveIndex} state={activeIndex} setTempDisplaying={setTempDisplaying}/>
                         ) 

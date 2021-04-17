@@ -9,9 +9,7 @@ export function getLocation(setxGeeks, setTempDisplaying, dispatch, addCity, set
             navigator.geolocation.getCurrentPosition(function(position){
                 setisLocation(true)
                //if location is returned then do this
-                console.log("PPPPPPPP",position)
                 getWeeklyWeather(position.coords.latitude,  position.coords.longitude).then(function(res){
-                    console.log("RRRRRR", res)   
                     const cityName = res.timezone.split("/")[1]
                        getWeather(cityName).then(function(res){
                         getWeeklyWeather(res.data.coord.lat, res.data.coord.lon).then(function(res2){

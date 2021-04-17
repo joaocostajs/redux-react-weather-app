@@ -29,3 +29,12 @@
   .liElement:hover svg{
     stroke:white;
   }
+
+  .search{
+  background-color:white;
+  display: inline-block;
+  }
+
+  .search:hover{
+    cursor:pointer;
+  }
