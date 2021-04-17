@@ -29,8 +29,10 @@ export async function getWeeklyWeather() {
         let url = 'https://api.openweathermap.org/data/2.5/onecall?lat=' 
         let {lat, lon} = [39.74362, -8.80705]
         if(arguments[0] && arguments[1]){
+            /* eslint no-restricted-syntax: ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"] */
             lat = arguments[0]
             lon = arguments[1]
+
             const res = await axios.get(`${url} ${lat} &lon= ${lon} &exclude=minutely,alerts,hourly&appid= ${key} &units=metric`)
             // const res = await axios.get(`${url + lat +"&lon=" + lon + "&exclude=minutely,alerts,hourly" +  "&appid=" + key + "&units=metric"}`)
             .then(function(response){
@@ -45,6 +47,7 @@ export async function getWeeklyWeather() {
             .get(getIP)
             .then(function(response){
                 const i = response
+                /* eslint no-restricted-syntax: ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"] */
                 //getting current user lat and lon
                 lat = response.data.lat
                 lon = response.data.lon
