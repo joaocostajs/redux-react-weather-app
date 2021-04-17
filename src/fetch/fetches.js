@@ -33,7 +33,7 @@ export async function getWeeklyWeather() {
             lat = arguments[0]
             lon = arguments[1]
 
-            const res = await axios.get(`${url} ${lat} &lon= ${lon} &exclude=minutely,alerts,hourly&appid= ${key} &units=metric`)
+            const res = await axios.get(`${url}${lat}&lon=${lon}&exclude=minutely,alerts,hourly&appid=${key}&units=metric`)
             // const res = await axios.get(`${url + lat +"&lon=" + lon + "&exclude=minutely,alerts,hourly" +  "&appid=" + key + "&units=metric"}`)
             .then(function(response){
                 return response.data
@@ -51,13 +51,14 @@ export async function getWeeklyWeather() {
                 //getting current user lat and lon
                 lat = response.data.lat
                 lon = response.data.lon
-                const res2 = axios.get(`${url} ${lat} &lon= ${lon} &exclude=minutely,alerts,hourly&appid= ${key} &units=metric`)
+                const res2 = axios.get(`${url}${lat}&lon=${lon}&exclude=minutely,alerts,hourly&appid=${key}&units=metric`)
                     .then(function(response){
                         console.log("here the week:", response.data)
                           /* eslint no-restricted-syntax: ["error"] */
                         const all = {response,i}
                         allres = all
                           /* eslint no-restricted-syntax: ["error"] */
+                          const r  = response.data
                         return response.data, i
                     })
                     return res2
