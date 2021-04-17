@@ -54,6 +54,7 @@ export async function getWeeklyWeather() {
                 const res2 = axios.get(`${url} ${lat} &lon= ${lon} &exclude=minutely,alerts,hourly&appid= ${key} &units=metric`)
                     .then(function(response){
                         console.log("here the week:", response.data)
+                          /* eslint no-restricted-syntax: ["SequenceExpression"] */
                         const all = {response,i}
                         allres = all
                         return response.data, i
