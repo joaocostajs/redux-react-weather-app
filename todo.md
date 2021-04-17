@@ -3,30 +3,30 @@
 
  ✅ connect click for the lower right section, current location weather, to display in the main section
 
- - change location method
+✅ change location method
 
- - if the current location fails them it should show leiria location
+✅ if the current location fails them it should show leiria location
 
  ✅ after typing in search input trigger function by clicking enter key
-      - show that city on enter
+      ✅ show that city on enter
 
  ✅ add leiria location and show it on screen
-      - make it look nice
+      ✅ make it look nice
 
- - clean the fetches functions
+✅ clean the fetches functions
 
- - create components for the elements and styled components
+ ✅ create components for the elements 
 
  ✅ add icons 
 
- - refactor code 
+✅ refactor code 
     ✅ refactored the 7 days item to a component
     ✅ refactored search function to inline function
 
- - add comments 
+✅ add comments 
 
 ✅ on the searched cities add also the country
 
-- create function for the notifications and refactor it
+✅ create function for the notifications and refactor it
 
-- reverse order of searched cities
+✅ reverse order of searched cities

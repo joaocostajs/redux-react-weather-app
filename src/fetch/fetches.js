@@ -31,7 +31,8 @@ export async function getWeeklyWeather() {
         if(arguments[0] && arguments[1]){
             lat = arguments[0]
             lon = arguments[1]
-            const res = await axios.get(url + lat +"&lon=" + lon + "&exclude=minutely,alerts,hourly" +  "&appid=" + key + "&units=metric")
+            const res = await axios.get(`${url} ${lat} &lon= ${lon} &exclude=minutely,alerts,hourly&appid= ${key} &units=metric`)
+            // const res = await axios.get(`${url + lat +"&lon=" + lon + "&exclude=minutely,alerts,hourly" +  "&appid=" + key + "&units=metric"}`)
             .then(function(response){
                 return response.data
             })
