@@ -29,7 +29,7 @@ export async function getWeeklyWeather() {
         let url = 'https://api.openweathermap.org/data/2.5/onecall?lat=' 
         let {lat, lon} = [39.74362, -8.80705]
         if(arguments[0] && arguments[1]){
-            /* eslint no-restricted-syntax: ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"] */
+            /* eslint no-restricted-syntax: ["error", "SequenceExpression"] */
             lat = arguments[0]
             lon = arguments[1]
 
@@ -47,7 +47,7 @@ export async function getWeeklyWeather() {
             .get(getIP)
             .then(function(response){
                 const i = response
-                /* eslint no-restricted-syntax: ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"] */
+                /* eslint no-restricted-syntax: ["error", "SequenceExpression"] */
                 //getting current user lat and lon
                 lat = response.data.lat
                 lon = response.data.lon
