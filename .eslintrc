@@ -1,0 +1,10 @@
+// .eslintrc file (no extension)
+{
+    "extends": [
+      "react-app"
+    ],
+    "rules": {
+      "no-unused-vars": "off"
+    },
+    "plugins": ["react", "react-hooks"]
+  }
