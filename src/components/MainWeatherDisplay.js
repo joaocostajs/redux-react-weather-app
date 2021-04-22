@@ -1,7 +1,7 @@
 export const MainWeatherDisplay = ({tempDisplaying}) => {
         return  <div style={{height:"50vh",display:"grid", alignItems:"center",marginLeft:"4em" }}>   
                     <div>
-                        <h1 style={{fontSize:"5em", display:"inline-block", marginRight:".5em"}}>{tempDisplaying[2] ? tempDisplaying[2] + "º": ''} </h1>
+                        <h1 style={{fontSize:"5em", display:"inline-block", marginRight:".5em"}}>{tempDisplaying[2] ?  Math.round(Number(tempDisplaying[2] )) + "º": ''} </h1>
                         <div style={{display:"inline-block"}}>
                             <h1 style={{display:"inline-block"}}>{tempDisplaying[0]}</h1>
                             <p>{tempDisplaying[1]}</p>
