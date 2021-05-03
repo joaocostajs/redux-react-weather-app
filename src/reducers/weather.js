@@ -14,18 +14,17 @@ const cities = (state = [], action) => {
             console.log("action",action)
         // if we already have this city on state dont add it again
             if( state.find(item => item.city === action.city)) return state
-            
             return [
                 // take the current state
                 ...state,
                 {
                     id: action.CityId,
-                    city:action.city,
-                    country:action.country,
-                    temp: action.temp,
-                    nextSevenDays: action.nextSevenDays,
-                    icon: action.icon,
-                    condition:action.condition
+                    city:action.newCity.city,
+                    country:action.newCity.country,
+                    temp: action.newCity.temp,
+                    nextDays: action.newCity.nextDays,
+                    icon: action.newCity.icon,
+                    condition:action.newCity.condition
                 }
               
                 //overwrite the state

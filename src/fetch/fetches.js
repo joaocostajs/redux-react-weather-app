@@ -7,6 +7,8 @@ var getIP = 'http://ip-api.com/json/';
 
 
 
+
+
 export async function getWeather(search) {
     if(search)
 try{
@@ -22,6 +24,7 @@ try{
     console.error(err)
 }           
 }
+
 
 
 export async function getWeeklyWeather() {

@@ -1,11 +1,12 @@
 
 let CityId = 0;
 
-export const addCity = (city,country,temp, nextSevenDays, icon, condition) => {
-    console.log("dispatch a add_city")
+export const addCity = (newCity) => {
+    console.log("dispatch a add_city:", newCity)
+    console.log("cityId++",CityId)
     ++CityId 
     return {type: "ADD_CITY",CityId ,
-    city,country,temp, nextSevenDays, icon, condition}
+    newCity}
 }
 
 export const deleteCity = (idx) => {

@@ -1,10 +1,12 @@
-import {ReactNotification, notification, store, useState, useEffect, useSelector, useDispatch, addCity, deleteCity, DaysDisplay, CityLi, SearchSvg, Input, getCity, MainWeatherDisplay, getLocation} from './weatherImports';
+import SideBar from '../../components/SideBar';
+import WeatherDisplay from '../../sections/WeatherDisplay';
+import {ReactNotification, notification, store, useState, useEffect, useSelector, useDispatch, addCity, deleteCity, DaysDisplay, CityLi, SearchSvg, Input, getCity, MainWeatherDisplay, getLocation} from '../weatherImports';
 
 function WeatherPage () {
-    const cities = useSelector(state => state.cities)
+    const cities = useSelector(state => state.cities || null)
     const dispatch = useDispatch()
     const [search, setSearch] = useState("")
-    const [tempDisplaying, setTempDisplaying] = useState({})
+    const [tempDisplaying, setTempDisplaying] = useState(null)
     const [activeIndex, setActiveIndex] = useState()
     const [xGeeks, setxGeeks] = useState()
     const [isLocation, setisLocation] = useState(false)
@@ -12,50 +14,46 @@ function WeatherPage () {
 
     useEffect(() => {
         //when page loads get the current location and also add location for XGeeks Leiria
-        getLocation(setxGeeks, setTempDisplaying, dispatch, addCity,  setisLocation)
+        getLocation(setTempDisplaying, dispatch,addCity)
         setActiveIndex(0)
          // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    // useEffect(() => {
+    //   console.log(tempDisplaying)
+    // }, [tempDisplaying])
 
-    useEffect(() => {
-        // wait to have leiria location and then display it otherwise dont show
-        const leiria = cities.find(city => city.city === "Leiria")
-        setxGeeks(leiria)
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [xGeeks])
+    // useEffect(() => {
+    //     // wait to have leiria location and then display it otherwise dont show
+    //     const leiria = cities.find(city => city.city === "Leiria")
+    //     setxGeeks(leiria)
+    //      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [xGeeks])
 
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            if(search.length > 0){
-                getCity(cities, search, store, notification, setTempDisplaying, dispatch, addCity)
-                setActiveIndex()
-            }else{
-                store.addNotification(notification("Info","Type a city before searching","warning"))
-            }
-        }
-    }
+    // const handleKeyDown = (event, search) => {
+    //     if (event.key === 'Enter') {
+    //         if(search.length > 0){
+    //             getCity(cities, search, store, notification, setTempDisplaying, dispatch, addCity)
+    //             setActiveIndex()
+    //         }else{
+    //             store.addNotification(notification("Info","Type a city before searching","warning"))
+    //         }
+    //     }
+    // }
 
     return (
         <div>
             <ReactNotification />
 
-            <div className="mainWrapper">
-                <div style={{height:"100vh", overflowY:"scroll"}}>
-                    {tempDisplaying ? 
-                        <MainWeatherDisplay tempDisplaying={tempDisplaying} /> 
-                    : "loading"}
-                    <center>
-                        <div style={{display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(100px, 1fr))", gap:"1em", width:"90%"}}>
-                        {tempDisplaying[3] ? Object.keys(tempDisplaying[3]).map((key, idx) =>
-                                //if idx is zero it means its today and we dont want it soo we dont return anything when is zero
-                                idx === 0 ? '' :
-                                <DaysDisplay item={tempDisplaying[3]} k={key}/>
-                                ) : "Loading"}
-                        </div>
-                    </center>
-                </div>
+         
+       
 
+            <div className="mainWrapper">
+
+            <WeatherDisplay  cities={cities}/>
+
+            <SideBar cities={cities} setSearch={setSearch} store={store}  getCity={getCity} dispatch={dispatch} addCity={addCity}  notification={notification} setActiveIndex={setActiveIndex}/>
+{/* 
             <div style={{height:"calc(100vh - 4em)",backgroundColor:"aliceBlue", padding:"2em 1em"}}>
                 <div style={{height:"65vh",}}>
                     <div style={{marginBottom:"2em"}}>
@@ -111,7 +109,7 @@ function WeatherPage () {
                     </div>
 
 
-                    </div>
+                    </div> */}
                 </div>
         </div>
        

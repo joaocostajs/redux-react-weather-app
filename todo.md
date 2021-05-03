@@ -30,3 +30,10 @@
 ✅ create function for the notifications and refactor it
 
 ✅ reverse order of searched cities
+
+
+
+
+new mission!! xgeeks failed soo lets imrpove this code
+
+- simplify everything!
